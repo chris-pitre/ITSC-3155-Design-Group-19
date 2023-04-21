@@ -25,6 +25,13 @@ posts = []
 posts.append(post1)
 posts.append(post2)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+    if __name__ == '__main__':
+     app.run(debug=True)
+
 @app.get("/forum")
 def forum_page():
     return render_template("forum.html", posts=posts)
