@@ -35,3 +35,11 @@ def home():
 @app.get("/forum")
 def forum_page():
     return render_template("forum.html", posts=posts)
+
+@app.get('/login')
+def login_page():
+   return render_template("login.html")
+
+@app.get('/about')
+def about_page():
+   return render_template("About.html")
