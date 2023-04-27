@@ -70,3 +70,11 @@ def get_post(post_id):
    post = posts[post_id]
    replies = get_replies(post_id)
    return render_template("post.html", post=post, replies=enumerate(replies))
+
+@app.get('/login')
+def login_page():
+   return render_template("login.html")
+
+@app.get('/about')
+def about_page():
+   return render_template("About.html")
