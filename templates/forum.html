@@ -3,28 +3,58 @@
 {% block title %}NinerStudy | Forum{% endblock %}
 {% block body %}
 
-{% for post in posts %}
-<div class="card mb-3" style="max-width: 100%; max-height: 600px;">
-    <div class="card-header text-white" style="background-color: #005035;">
-        <h5 class="card-title text-white text-center">{{ post.title }}</h5>
-    </div>
-    <div class="row g-0">
-      <div class="col">
-        <div class="card-body">
-          <p class="card-text">{{ post.text }}</p>
-          <p class="card-text"><small class="text-body-secondary">First posted on {{ post.post_date }}</small></p>
-          <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_activity_date }}</small></p>
-          <a href="#" class="btn text-white" style="background-color: #005035">View Post</a>
-          <a href="#" class="btn text-white" style="background-color: #005035">Reply</a>
+<div class="row">
+  <div class="container col-9">
+  {% for post in posts %}
+    <div class="card mb-3" style="max-width: 100%; max-height: 600px;">
+        <div class="card-header text-white" style="background-color: #005035;">
+            <h5 class="card-title text-white text-center">{{ post.title }}</h5>
         </div>
-      </div>
-      {% if post.image !=  None %}
-      <div class="col-md-4">
-        <img src="{{ post.image }}" class="img-fluid img-thumbnail" alt="{{ post.alt_text }}">
-      </div>
-      {% endif %}
+        <div class="row g-0">
+          <div class="col">
+            <div class="card-body">
+              <p class="card-text">{{ post.text }}</p>
+              <p class="card-text"><small class="text-body-secondary">First posted on {{ post.post_date }}</small></p>
+              <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_activity_date }}</small></p>
+              <a href="#" class="btn text-white" style="background-color: #005035">View Post</a>
+              <a href="#" class="btn text-white" style="background-color: #005035">Reply</a>
+            </div>
+          </div>
+          {% if post.image !=  None %}
+          <div class="col-md-4">
+            <img src="{{ post.image }}" class="img-fluid img-thumbnail" alt="{{ post.alt_text }}">
+          </div>
+          {% endif %}
+        </div>
     </div>
+  {% endfor %} 
+  </div>
+  <div class="container col-3"></div>
+  <div class="container col-3 position-fixed end-0">
+    <div class="card">
+      <div class="card-header text-white" style="background-color: #005035;">
+        <h5 class="card-title text-center">About</h5>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Rules</h5>
+        <ol class="list-group list-group-numbered">
+          <li class="list-group-item">Keep it friendly</li>
+          <li class="list-group-item">Stay on topic</li>
+          <li class="list-group-item">No Spam/Advertising/Self Promotion</li>
+          <li class="list-group-item">No copyright-infringing material</li>
+          <li class="list-group-item">No offensive posts, links, or images</li>
+        </ol>
+        <hr>
+        <p class="card-text">Total Posts: {{ total_posts }}</p>
+        <p class="card-text">Total Replies: {{ total_replies }}</p>
+        <a class="btn text-white" style="background-color: #005035;">Create Post</a>
+      </div>
+    </div>
+  </div>
 </div>
-{% endfor %}
+
+
+<br>
+<br>
 
 {% endblock %}

@@ -24,6 +24,8 @@ posts = []
 
 posts.append(post1)
 posts.append(post2)
+for i in range(10):
+   posts.append(post2)
 
 @app.route('/')
 def home():
@@ -34,4 +36,8 @@ def home():
 
 @app.get("/forum")
 def forum_page():
-    return render_template("forum.html", posts=posts)
+    return render_template("forum.html", posts=posts, total_posts = len(posts), total_replies = 0)
+
+@app.get("/about")
+def about_page():
+   return render_template("About.html")
