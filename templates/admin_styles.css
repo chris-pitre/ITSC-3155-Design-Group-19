@@ -1,0 +1,100 @@
+.admin-form{
+    margin: 30px auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.admin-form .text-editor{
+    min-height: 130px;
+    display: block;
+    width: 100%;
+    font-size: 1.1rem;
+    color: grey;
+    background-color: white;
+    border: 1px solid black;
+    line-height: 1.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 3px;
+    height: 53px;
+    font-family: inherit;
+}
+
+.input-group{
+    margin-bottom: 16px;
+
+}
+
+.input-group label{
+    display: block;
+    margin-bottom: 12px;
+}
+
+
+
+.input-control{
+    display: block;
+    width: 100%;
+    font-size: 1.1rem;
+    color: grey;
+    background-color: white;
+    border: 1px solid black;
+    line-height: 1.6rem;
+    padding: 0.75rem 1rem;
+    border-radius: 3px;
+    height: 52px;
+    font-family: inherit;
+}
+
+.input-control:focus{
+    outline: 0;
+    border: 1px solid #59b
+
+}
+
+.admin-form .post-details{
+    display: flex;
+
+}
+
+.admin-form .post-details .select-topic-wrapper{
+    flex-basis: 70%;
+}
+
+.admin-form .post-details .image-wrapper{
+    flex-basis: 30%;
+    padding: 25px 0px 0px 20px;
+}
+
+.admin-form .post-details .image-wrapper .image-btn{
+    width: 100%;
+    height: 52px;
+    border-radius: 3px;
+    border: 1px dashed lightslategray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    background-color: green;
+    border: 1px solid transparent;
+    padding: 0.65rem 1.5rem;
+    text-align: center;
+    text-decoration: none !important;
+    display: inline-block;
+    font-size: 1rem;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.btn:hover{
+    background-color: lightgrey;
+    color: white;
+}
+
+.primary-btn{
+    background-color: green;
+    color:white
+}
+
