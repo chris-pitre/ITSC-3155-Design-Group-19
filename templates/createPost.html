@@ -1,0 +1,53 @@
+{% extends '_layout.html' %}
+
+{% block title %}NinerStudy | Create Post{% endblock %}
+{% block body %}
+
+<div class="page-content container">
+    <h2 class="text-center mb-3">Create New Post</h2>
+    <div class="admin-container">
+        <form action="#" method="post" class="admin-form mb-box" enctype="multipart/form-data">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Title</span>
+                <input class="form-control" type="text" name="title" id="title" required>
+            </div>
+
+            <div class="mb-3">
+                <textarea id="text-editor" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="topic" class="input-group-text">Topic</label>
+                <select name="topic_id" id="topic" class="form-select" required>
+                    <option selected disabled>Choose a topic...</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Business">Business</option>
+                    <option value="Civil Engineering">Civil Engineering</option>
+                </select>
+            </div>
+            
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="imageUpload">Image</label>
+                <input type="file" class="form-control" id="imageUpload" name="image" accept="image/png, image/jpg, image/jpeg">
+            </div>
+
+            <button type="submit" class="btn big-btn text-white" style="background-color: #005035;">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    var quill = new Quill('#text-editor', {
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                ['code-block']
+            ]
+        },
+        placeholder: '',
+        theme: 'snow'  // or 'bubble'
+    });
+</script>
+{% endblock %}

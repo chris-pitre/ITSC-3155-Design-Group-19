@@ -78,3 +78,7 @@ def login_page():
 @app.get('/about')
 def about_page():
    return render_template("About.html")
+
+@app.get('/createPost')
+def create_post_page():
+   return render_template("createPost.html")
