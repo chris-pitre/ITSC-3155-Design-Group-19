@@ -5,18 +5,18 @@
 
 <div class="row">
   <div class="container col-9">
-  {% for id, post in posts %}
+  {% for post in posts %}
     <div class="card mb-3" style="max-width: 100%; max-height: 600px;">
         <div class="card-header text-white" style="background-color: #005035;">
-            <h5 class="card-title text-white text-center">{{ post.title }}</h5>
+            <h5 class="card-title text-white text-center">{{ post.title }} | {{ post.topic }}</h5>
         </div>
         <div class="row g-0">
           <div class="col">
             <div class="card-body">
-              <p class="card-text">{{ post.text }}</p>
+              <p class="card-text">{{ post.post_text }}</p>
               <p class="card-text"><small class="text-body-secondary">First posted on {{ post.post_date }}</small></p>
-              <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_activity_date }}</small></p>
-              <a href="/post/{{ id }}" class="btn text-white" style="background-color: #005035">View Post</a>
+              <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_updated }}</small></p>
+              <a href="/post/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">View Post</a>
               <a href="#" class="btn text-white" style="background-color: #005035">Reply</a>
             </div>
           </div>
