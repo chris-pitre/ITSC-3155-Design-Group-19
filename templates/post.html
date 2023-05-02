@@ -12,7 +12,7 @@
         <div class="card-body">
           <p class="card-text">{{ post.post_text }}</p>
           <p class="card-text"><small class="text-body-secondary">Posted on {{ post.post_date }}</small></p>
-          <a href="#" class="btn text-white" style="background-color: #005035">Reply</a>
+          <a href="/createReply/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">Reply</a>
         </div>
       </div>
       {% if post.image !=  None %}
@@ -27,8 +27,8 @@
         <div class="row g-0">
           <div class="col">
             <div class="card-body">
-              <p class="card-text">{{ reply.text }}</p>
-              {% if reply.image !=  None %}
+              <p class="card-text">{{ reply.reply_text }}</p>
+              {% if reply.media_id !=  None %}
                 <a class="btn btn-sm text-white" style="background-color: #005035;" data-bs-toggle="collapse" href="#image/{{ id }}" role="button" aria-expanded="false" aria-controls="{{ id }}Collapse">
                     View Image
                 </a> 

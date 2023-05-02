@@ -17,10 +17,10 @@
               <p class="card-text"><small class="text-body-secondary">First posted on {{ post.post_date }}</small></p>
               <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_updated }}</small></p>
               <a href="/post/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">View Post</a>
-              <a href="#" class="btn text-white" style="background-color: #005035">Reply</a>
+              <a href="/createReply/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">Reply</a>
             </div>
           </div>
-          {% if post.image !=  None %}
+          {% if post.media_id !=  None %}
           <div class="col-md-4">
             <img src="{{ post.image }}" class="img-fluid img-thumbnail" alt="{{ post.alt_text }}">
           </div>

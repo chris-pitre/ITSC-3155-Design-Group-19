@@ -21,7 +21,9 @@ def home():
 @app.get("/forum")
 def forum_page():
     posts = post_repository_singleton.get_posts()
-    return render_template("forum.html", posts=posts, total_posts=2, total_replies=0)
+    total_posts = post_repository_singleton.get_total_posts()
+    total_replies = post_repository_singleton.get_total_replies()
+    return render_template("forum.html", posts=posts, total_posts=total_posts, total_replies=total_replies)
 
 @app.get("/post/<int:post_id>")
 def get_post(post_id):
@@ -54,3 +56,19 @@ def create_post():
         abort(400)
     created_post = post_repository_singleton.create_post(title, text, topic, user_id, post_date, last_updated, media_id)
     return redirect(f'/post/{created_post.post_id}')
+
+@app.get('/createReply/<int:post_id>')
+def create_reply_page(post_id):
+    post = post_repository_singleton.get_post_by_id(post_id)
+    return render_template("createReply.html", post=post)
+
+@app.post('/createReply/<int:post_id>')
+def create_reply(post_id):
+    user_id = 1 #replace when authentication exists
+    reply_text = request.form.get('text', '')
+    media_id = None
+    post_date = datetime.now()
+    if reply_text == '':
+        abort(400)
+    created_reply = post_repository_singleton.create_reply(post_id, user_id, reply_text, media_id, post_date)
+    return redirect(f'/post/{created_reply.post_id}')
