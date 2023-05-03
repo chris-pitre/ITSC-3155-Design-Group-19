@@ -7,8 +7,22 @@ class User(db.Model):
     user_username = db.Column(db.String(50), nullable=False)
     user_password = db.Column(db.String(255), nullable=False)
     user_email = db.Column(db.String(100), nullable=False)
+    authenticated = db.Column(db.Boolean, default=False)
+
     posts = db.relationship("Post", backref="user")
     replies = db.relationship("Reply", backref="user")
+
+    def is_active(self):
+        return True
+    
+    def is_authenticated(self):
+        return self.authenticated
+    
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return self.user_id
 
 class Media(db.Model):
     media_id = db.Column(db.Integer, primary_key=True, nullable=False)

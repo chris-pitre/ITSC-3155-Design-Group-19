@@ -16,8 +16,11 @@
               <p class="card-text">{{ post.post_text }}</p>
               <p class="card-text"><small class="text-body-secondary">First posted on {{ post.post_date }}</small></p>
               <p class="card-text"><small class="text-body-secondary">Last updated on {{ post.last_updated }}</small></p>
+              <p class="card-text"><small class="text-body-secondary">Posted by {{ post.user_username }}</small></p>
               <a href="/post/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">View Post</a>
-              <a href="/createReply/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">Reply</a>
+              {% if current_user.is_authenticated %}
+                <a href="/createReply/{{ post.post_id }}" class="btn text-white" style="background-color: #005035">Reply</a>
+              {% endif %}
             </div>
           </div>
           {% if post.media_id !=  None %}
@@ -47,7 +50,9 @@
         <hr>
         <p class="card-text">Total Posts: {{ total_posts }}</p>
         <p class="card-text">Total Replies: {{ total_replies }}</p>
-        <a class="btn text-white" style="background-color: #005035;" href="/createPost">Create Post</a>
+        {% if current_user.is_authenticated %}
+          <a class="btn text-white" style="background-color: #005035;" href="/createPost">Create Post</a>
+        {% endif %}
       </div>
     </div>
   </div>

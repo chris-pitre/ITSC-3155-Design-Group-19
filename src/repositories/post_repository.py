@@ -3,8 +3,30 @@ from sqlalchemy import desc, asc
 
 class PostRepository:
 
+    def is_username_exists(self, username):
+        username = f'%{username}%'
+        found_name = User.query.filter(User.user_username.like(username)).first() is not None
+        return found_name
+    
+    def is_email_exists(self, email):
+        email = f'%{email}%'
+        found_email = User.query.filter(User.user_email.like(email)).first() is not None
+        return found_email
+    
+    def create_user(self, username, email, password):
+        new_user = User(user_username=username, user_email=email, user_password=password)
+        db.session.add(new_user)
+        db.session.commit()
+        return new_user
+    
+    def get_user_from_email(self, email):
+        email = f'%{email}%'
+        user = User.query.filter(User.user_email.like(email)).first()
+        return user
+
     def get_posts(self):
-        all_posts = Post.query.order_by(desc(Post.last_updated)).all()
+        all_posts = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username).\
+            join(User, User.user_id == Post.user_id).order_by(desc(Post.last_updated)).all()
         return all_posts
     
     def get_total_posts(self):
@@ -18,11 +40,13 @@ class PostRepository:
         return new_post
     
     def get_post_by_id(self, post_id):
-        post = Post.query.filter_by(post_id=post_id).first()
+        post = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username).\
+            filter_by(post_id=post_id).join(User, User.user_id == Post.user_id).order_by(desc(Post.last_updated)).first()
         return post
     
     def get_replies(self, post_id):
-        replies = Reply.query.filter_by(post_id=post_id).order_by(asc(Reply.post_date)).all()
+        replies = db.session.query(Reply.reply_text, Reply.media_id, Reply.post_date, User.user_username).\
+            filter_by(post_id=post_id).join(User, User.user_id == Reply.user_id).order_by(asc(Reply.post_date)).all()
         return replies
     
     def get_total_replies(self):
@@ -33,7 +57,7 @@ class PostRepository:
         new_reply = Reply(post_id=post_id, user_id=user_id, reply_text=reply_text, media_id=media_id, post_date=post_date)
         db.session.add(new_reply)
         db.session.commit()
-        original_post = post_repository_singleton.get_post_by_id(post_id)
+        original_post = Post.query.filter_by(post_id=post_id).first()
         original_post.last_updated = post_date
         db.session.commit()
         return new_reply
