@@ -13,10 +13,15 @@
             <div class="mb-3">
                 <textarea id="text-editor" class="form-control" rows="5" name="text" required></textarea>
             </div>
-            
+
             <div class="input-group mb-3">
-                <label class="input-group-text" for="imageUpload">Image</label>
-                <input type="file" class="form-control" id="imageUpload" name="image" accept="image/png, image/jpg, image/jpeg">
+                <label class="input-group-text" for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpg, image/jpeg">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Alt Text</span>
+                <input class="form-control" type="text" name="alttext" id="alttext">
             </div>
 
             <button type="submit" class="btn big-btn text-white" style="background-color: #005035;">Submit</button>

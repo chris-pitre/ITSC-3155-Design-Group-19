@@ -1,11 +1,16 @@
-from flask import Flask, abort, redirect, render_template, request, url_for
+from flask import Flask, abort, redirect, render_template, request, url_for, send_from_directory
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_bcrypt import Bcrypt
 from re import fullmatch
+from werkzeug.utils import secure_filename
+import os
 
 from src.repositories.post_repository import post_repository_singleton
 from src.models import db, User
 from datetime import datetime
+
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -15,6 +20,7 @@ app.secret_key = 'itsc3155secretkeyforwebsite'
 app.config['SQLALCHEMY_DATABASE_URI'] = \
     '' #IMPORTANT!!! FILL IN YOUR OWN DATABASE HERE AND RUN ninerstudy-schema.sql TO CREATE TABLE 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager.session_protection = "strong"
 
 db.init_app(app)
@@ -106,6 +112,16 @@ def create_post():
     post_date = datetime.now()
     last_updated = post_date
     media_id = None
+    if 'image' in request.files:
+        image = request.files['image']
+        if image and allowed_file(image.filename):
+            print("help")
+            filename = secure_filename(image.filename)
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image.save(path)
+            alttext = request.form.get('alttext', 'No Alt Text')
+            new_media = post_repository_singleton.create_media(path, alttext)
+            media_id = new_media.media_id
     if title == '' or text == '':
         abort(400)
     created_post = post_repository_singleton.create_post(title, text, topic, user_id, post_date, last_updated, media_id)
@@ -124,10 +140,27 @@ def create_reply(post_id):
     reply_text = request.form.get('text', '')
     media_id = None
     post_date = datetime.now()
+    if 'image' in request.files:
+        image = request.files['image']
+        if image and allowed_file(image.filename):
+            print("help")
+            filename = secure_filename(image.filename)
+            path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            image.save(path)
+            alttext = request.form.get('alttext', 'No Alt Text')
+            new_media = post_repository_singleton.create_media(path, alttext)
+            media_id = new_media.media_id
     if reply_text == '':
         abort(400)
     created_reply = post_repository_singleton.create_reply(post_id, user_id, reply_text, media_id, post_date)
     return redirect(f'/post/{created_reply.post_id}')
+
+@app.route('/uploads/<path:name>')
+def download_file(name):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], name)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 if __name__ == '__main__':
      app.run(debug=True)

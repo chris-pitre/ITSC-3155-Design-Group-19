@@ -1,0 +1,1 @@
+This is the folder where user images are stored. It is empty right now, but as you use it images will be added.
