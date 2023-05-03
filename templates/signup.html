@@ -1,21 +1,24 @@
 {% extends '_layout.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}NinerStudy | Sign Up{% endblock %}
 
 {% block body %}
 <style>
-    div {text-align: center;
+    div {
+        text-align: center;
         position: relative;
         top: 50%;
     }
+
     body {
         background-image: url('{{ url_for('static', filename='UNCC.jpg') }}');
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
-        min-height:100vh;
+        min-height: 100vh;
     }
+
     .header-container {
         display: flex;
         justify-content: space-between;
@@ -31,12 +34,17 @@
             {% endif %}
             <form action="#" method="post">
                 <div class="mb-3">
+                    <label for="user" class="form-label">Username:</label>
+                    <input type="text" id="user" name="user" placeholder="Username" class="form-control" required>
+                </div>
+                <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="text" id="email" name="email" placeholder="email@uncc.edu or email@charlotte.edu" class="form-control" required>
+                    <input type="email" id="email" name="email" placeholder="email@uncc.edu or email@charlotte.edu" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password:</label>
                     <input type="password" id="password" name="password" placeholder="Password" class="form-control" required>
+                    <span id="passwordHelp" class="form-text">Must be 8-20 characters long</span>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn big-btn text-white" style="background-color: #005035;">Submit</button>
@@ -46,5 +54,5 @@
     </div>
 </div>
 
-{% endblock %}
 
+{% endblock %}

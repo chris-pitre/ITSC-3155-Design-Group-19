@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS user (
     user_username VARCHAR(50) NOT NULL,
     user_password VARCHAR(255) NOT NULL,
     user_email VARCHAR(100) NOT NULL ,
+    authenticated BOOLEAN,
     PRIMARY KEY (user_id)
 );
 
