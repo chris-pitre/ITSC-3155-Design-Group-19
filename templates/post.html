@@ -18,9 +18,9 @@
           {% endif %}
         </div>
       </div>
-      {% if post.image !=  None %}
+      {% if post.media_id !=  None %}
       <div class="col-md-4">
-        <img src="{{ post.image }}" class="img-fluid img-thumbnail" alt="{{ post.alt_text }}">
+        <img src="../{{ post.media_path }}" class="img-fluid img-thumbnail float-end" alt="{{ post.media_alttext }}">
       </div>
       {% endif %}
     </div>
@@ -32,7 +32,7 @@
             <div class="card-body">
               <p class="card-text">{{ reply.reply_text }}</p>
               {% if reply.media_id !=  None %}
-                <a class="btn btn-sm text-white" style="background-color: #005035;" data-bs-toggle="collapse" href="#image/{{ id }}" role="button" aria-expanded="false" aria-controls="{{ id }}Collapse">
+                <a class="btn btn-sm text-white" style="background-color: #005035;" data-bs-toggle="collapse" href="#image/{{ reply.media_id }}" role="button" aria-expanded="false" aria-controls="{{ reply.media_id }}Collapse">
                     View Image
                 </a> 
               {% endif %}
@@ -40,10 +40,10 @@
               <p class="card-text"><small class="text-body-secondary">Posted by {{ reply.user_username }}</small></p>
             </div>
           </div>
-          {% if reply.image !=  None %}
+          {% if reply.media_id !=  None %}
           <div class="col-md-4">
-            <div class="collapse" id="image/{{ id }}">
-                <img src="{{ reply.image }}" class="img-fluid img-thumbnail" alt="{{ reply.alt_text }}">
+            <div class="collapse" id="image/{{ reply.media_id }}">
+                <img src="../{{ reply.media_path }}" class="img-fluid img-thumbnail float-end" alt="{{ reply.media_alttext }}">
             </div>
           </div>
           {% endif %}

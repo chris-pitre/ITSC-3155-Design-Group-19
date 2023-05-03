@@ -25,8 +25,9 @@ class PostRepository:
         return user
 
     def get_posts(self):
-        all_posts = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username).\
-            join(User, User.user_id == Post.user_id).order_by(desc(Post.last_updated)).all()
+        all_posts = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username, Media.media_path, Media.media_alttext).\
+            join(User, User.user_id == Post.user_id).\
+            join(Media, Media.media_id == Post.media_id, isouter=True).order_by(desc(Post.last_updated)).all()
         return all_posts
     
     def get_total_posts(self):
@@ -40,13 +41,15 @@ class PostRepository:
         return new_post
     
     def get_post_by_id(self, post_id):
-        post = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username).\
-            filter_by(post_id=post_id).join(User, User.user_id == Post.user_id).order_by(desc(Post.last_updated)).first()
+        post = db.session.query(Post.post_id, Post.title, Post.topic, Post.post_text, Post.media_id, Post.post_date, Post.last_updated, User.user_username, Media.media_path, Media.media_alttext).\
+            filter_by(post_id=post_id).join(User, User.user_id == Post.user_id).\
+            join(Media, Media.media_id == Post.media_id, isouter=True).order_by(desc(Post.last_updated)).first()
         return post
     
     def get_replies(self, post_id):
-        replies = db.session.query(Reply.reply_text, Reply.media_id, Reply.post_date, User.user_username).\
-            filter_by(post_id=post_id).join(User, User.user_id == Reply.user_id).order_by(asc(Reply.post_date)).all()
+        replies = db.session.query(Reply.reply_text, Reply.media_id, Reply.post_date, User.user_username, Media.media_path, Media.media_alttext).\
+            filter_by(post_id=post_id).join(User, User.user_id == Reply.user_id).\
+            join(Media, Media.media_id == Reply.media_id, isouter=True).order_by(asc(Reply.post_date)).all()
         return replies
     
     def get_total_replies(self):
@@ -61,6 +64,12 @@ class PostRepository:
         original_post.last_updated = post_date
         db.session.commit()
         return new_reply
+    
+    def create_media(self, path, alttext):
+        new_media = Media(media_path=path, media_alttext=alttext)
+        db.session.add(new_media)
+        db.session.commit()
+        return new_media
 
 #Repository Singleton
 post_repository_singleton = PostRepository()
